@@ -13,17 +13,18 @@ import { UsersService } from "./users.service";
 
 @Resolver(() => User)
 export class UsersResolver {
-    constructor(private readonly usersService: UsersService) {}
+    constructor(private readonly usersService: UsersService) { }
 
     @Query(() => User, { name: 'user', nullable: true })
     @UseGuards(GqlAuthGuard)
-    getUser(@CurrentUser() user: User,  @Args() getUserArgs: GetUserArgs): User {
+    getUser(@CurrentUser() user: User, @Args() getUserArgs: GetUserArgs): User {
         return this.usersService.getUser(getUserArgs);
     }
-
+    //@Args() getUsersArgs: GetUsersArgs
+    //getUsersArgs
     @Query(() => [User], { name: 'users', nullable: 'items' })
-    getUsers(@Args() getUsersArgs: GetUsersArgs): User[] {
-        return this.usersService.getUsers(getUsersArgs);
+    getUsers(): User[] {
+        return this.usersService.getUsers();
     }
 
     @Mutation(() => User)
